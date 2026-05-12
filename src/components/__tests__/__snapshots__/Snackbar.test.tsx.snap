@@ -296,6 +296,7 @@ exports[`renders snackbar with action button 1`] = `
                 {
                   "color": "rgba(245, 239, 247, 1)",
                 },
+                undefined,
               ],
             ],
           ]
@@ -567,6 +568,7 @@ exports[`renders snackbar with content 1`] = `
                 {
                   "color": "rgba(245, 239, 247, 1)",
                 },
+                undefined,
               ],
             ],
           ]

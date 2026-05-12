@@ -259,7 +259,43 @@ const Snackbar = ({
     }
   }, [visible, handleOnVisible, handleOnHidden]);
 
-  const { colors } = theme as Theme;
+  const { buttonTextColor, textColor, backgroundColor } = React.useMemo(() => {
+    const { colors } = theme as Theme;
+    return {
+      buttonTextColor: colors.inversePrimary,
+      textColor: colors.inverseOnSurface,
+      backgroundColor: colors.inverseSurface,
+    };
+  }, [theme]);
+
+  const wrapperPaddings = React.useMemo(
+    () => ({
+      paddingBottom: bottom,
+      paddingHorizontal: Math.max(left, right),
+    }),
+    [bottom, left, right]
+  );
+
+  const messageElement = React.useMemo(() => {
+    if (typeof messageContent === 'string') {
+      return (
+        <Text
+          variant="bodyMedium"
+          style={[styles.content, { color: textColor }, contentStyle]}
+          maxFontSizeMultiplier={maxFontSizeMultiplier}
+        >
+          {messageContent}
+        </Text>
+      );
+    }
+
+    return (
+      <View style={[styles.content, contentStyle]}>
+        {/* Wrapper view enables multi-line support for an element passed as `children`. */}
+        <View>{messageContent}</View>
+      </View>
+    );
+  }, [messageContent, textColor, contentStyle, maxFontSizeMultiplier]);
 
   if (hidden) {
     return null;
@@ -272,39 +308,8 @@ const Snackbar = ({
     accessibilityLabel: actionAccessibilityLabel,
   } = action ?? {};
 
-  const buttonTextColor = colors.inversePrimary;
-  const textColor = colors.inverseOnSurface;
-  const backgroundColor = colors.inverseSurface;
-
   const isIconButton = Boolean(onIconPress);
-
   const marginLeft = action ? -12 : -16;
-
-  const wrapperPaddings = {
-    paddingBottom: bottom,
-    paddingHorizontal: Math.max(left, right),
-  };
-
-  const renderChildrenWithWrapper = () => {
-    if (typeof messageContent === 'string') {
-      return (
-        <Text
-          variant="bodyMedium"
-          style={[styles.content, { color: textColor }]}
-          maxFontSizeMultiplier={maxFontSizeMultiplier}
-        >
-          {messageContent}
-        </Text>
-      );
-    }
-
-    return (
-      <View style={[styles.content, contentStyle]}>
-        {/* View is added to allow multiple lines support for Text component as children */}
-        <View>{messageContent}</View>
-      </View>
-    );
-  };
 
   return (
     <View
@@ -339,7 +344,7 @@ const Snackbar = ({
         elevation={elevation}
         {...rest}
       >
-        {renderChildrenWithWrapper()}
+        {messageElement}
         {(action || isIconButton) && (
           <View style={[styles.actionsContainer, { marginLeft }]}>
             {action ? (
@@ -364,7 +369,7 @@ const Snackbar = ({
                 accessibilityRole="button"
                 borderless
                 onPress={onIconPress}
-                iconColor={colors.inverseOnSurface}
+                iconColor={textColor}
                 theme={theme}
                 icon={
                   icon ||
