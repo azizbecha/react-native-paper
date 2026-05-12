@@ -2,9 +2,11 @@ import * as React from 'react';
 import {
   Animated,
   Easing,
+  GestureResponderEvent,
   I18nManager,
   StyleProp,
   StyleSheet,
+  TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
@@ -19,7 +21,7 @@ import MaterialCommunityIcon from './MaterialCommunityIcon';
 import Surface from './Surface';
 import Text from './Typography/Text';
 import { useInternalTheme } from '../core/theming';
-import type { $Omit, $RemoveChildren, Theme, ThemeProp } from '../types';
+import type { $Omit, Theme, ThemeProp } from '../types';
 
 export type Props = $Omit<
   React.ComponentProps<typeof Surface>,
@@ -30,12 +32,17 @@ export type Props = $Omit<
    */
   visible: boolean;
   /**
-   * Label and press callback for the action button. It should contain the following properties:
-   * - `label` - Label of the action button
-   * - `onPress` - Callback that is called when action button is pressed.
+   * Configuration for the action button. It can contain the following properties:
+   * - `label` - Label of the action button (required).
+   * - `onPress` - Callback that is called when the action button is pressed. The Snackbar is also dismissed.
+   * - `labelStyle` - Style for the action button's label.
+   * - `accessibilityLabel` - Accessibility label for the action button.
    */
-  action?: $RemoveChildren<typeof Button> & {
+  action?: {
     label: string;
+    onPress?: (e: GestureResponderEvent) => void;
+    labelStyle?: StyleProp<TextStyle>;
+    accessibilityLabel?: string;
   };
   /**
    * @supported Available in v5.x with theme version 3
@@ -259,11 +266,11 @@ const Snackbar = ({
   }
 
   const {
-    style: actionStyle,
     label: actionLabel,
     onPress: onPressAction,
-    ...actionProps
-  } = action || {};
+    labelStyle: actionLabelStyle,
+    accessibilityLabel: actionAccessibilityLabel,
+  } = action ?? {};
 
   const buttonTextColor = colors.inversePrimary;
   const textColor = colors.inverseOnSurface;
@@ -341,12 +348,13 @@ const Snackbar = ({
                   onPressAction?.(event);
                   onDismiss();
                 }}
-                style={[styles.button, actionStyle]}
+                style={styles.button}
+                labelStyle={actionLabelStyle}
+                accessibilityLabel={actionAccessibilityLabel}
                 textColor={buttonTextColor}
                 compact={false}
                 mode="text"
                 theme={theme}
-                {...actionProps}
               >
                 {actionLabel}
               </Button>
