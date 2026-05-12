@@ -21,7 +21,10 @@ import Text from './Typography/Text';
 import { useInternalTheme } from '../core/theming';
 import type { $Omit, $RemoveChildren, Theme, ThemeProp } from '../types';
 
-export type Props = $Omit<React.ComponentProps<typeof Surface>, 'mode'> & {
+export type Props = $Omit<
+  React.ComponentProps<typeof Surface>,
+  'mode' | 'children'
+> & {
   /**
    * Whether the Snackbar is currently visible.
    */
@@ -59,7 +62,12 @@ export type Props = $Omit<React.ComponentProps<typeof Surface>, 'mode'> & {
   /**
    * Text content of the Snackbar.
    */
-  children: React.ReactNode;
+  message?: string;
+  /**
+   * @deprecated Use `message` instead. When both `message` and `children` are set, `message` is used.
+   * Text content of the Snackbar.
+   */
+  children?: React.ReactNode;
   /**
    * @supported Available in v5.x with theme version 3
    * Changes Snackbar shadow and background on iOS and Android.
@@ -117,14 +125,14 @@ const DURATION_LONG = 10000;
  *       <Snackbar
  *         visible={visible}
  *         onDismiss={onDismissSnackBar}
+ *         message="Hey there! I'm a Snackbar."
  *         action={{
  *           label: 'Undo',
  *           onPress: () => {
  *             // Do something
  *           },
- *         }}>
- *         Hey there! I'm a Snackbar.
- *       </Snackbar>
+ *         }}
+ *       />
  *     </View>
  *   );
  * };
@@ -147,6 +155,7 @@ const Snackbar = ({
   iconAccessibilityLabel = 'Close icon',
   duration = DURATION_MEDIUM,
   onDismiss,
+  message,
   children,
   elevation = 2,
   style,
@@ -159,6 +168,14 @@ const Snackbar = ({
 }: Props) => {
   const theme = useInternalTheme(themeOverrides);
   const { bottom, right, left } = useSafeAreaInsets();
+
+  if (process.env.NODE_ENV !== 'production' && children != null) {
+    console.warn(
+      'Snackbar: the `children` prop is deprecated and will be removed in a future release. Use the `message` prop instead.'
+    );
+  }
+
+  const messageContent = message != null ? message : children;
 
   const { current: opacity } = React.useRef<Animated.Value>(
     new Animated.Value(0.0)
@@ -262,14 +279,14 @@ const Snackbar = ({
   };
 
   const renderChildrenWithWrapper = () => {
-    if (typeof children === 'string') {
+    if (typeof messageContent === 'string') {
       return (
         <Text
           variant="bodyMedium"
           style={[styles.content, { color: textColor }]}
           maxFontSizeMultiplier={maxFontSizeMultiplier}
         >
-          {children}
+          {messageContent}
         </Text>
       );
     }
@@ -277,7 +294,7 @@ const Snackbar = ({
     return (
       <View style={[styles.content, contentStyle]}>
         {/* View is added to allow multiple lines support for Text component as children */}
-        <View>{children}</View>
+        <View>{messageContent}</View>
       </View>
     );
   };
