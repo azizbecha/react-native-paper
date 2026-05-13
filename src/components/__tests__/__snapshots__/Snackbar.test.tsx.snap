@@ -30,11 +30,11 @@ exports[`renders snackbar with Text as a child 1`] = `
         "opacity": 0,
         "shadowColor": "#000",
         "shadowOffset": {
-          "height": 2,
+          "height": 4,
           "width": 0,
         },
         "shadowOpacity": 0.15,
-        "shadowRadius": 6,
+        "shadowRadius": 8,
         "transform": [
           {
             "scale": 0.9,
@@ -62,7 +62,7 @@ exports[`renders snackbar with Text as a child 1`] = `
             "width": 0,
           },
           "shadowOpacity": 0.3,
-          "shadowRadius": 2,
+          "shadowRadius": 3,
         }
       }
       testID="surface"
@@ -118,11 +118,11 @@ exports[`renders snackbar with View & Text as a child 1`] = `
         "opacity": 0,
         "shadowColor": "#000",
         "shadowOffset": {
-          "height": 2,
+          "height": 4,
           "width": 0,
         },
         "shadowOpacity": 0.15,
-        "shadowRadius": 6,
+        "shadowRadius": 8,
         "transform": [
           {
             "scale": 0.9,
@@ -150,7 +150,7 @@ exports[`renders snackbar with View & Text as a child 1`] = `
             "width": 0,
           },
           "shadowOpacity": 0.3,
-          "shadowRadius": 2,
+          "shadowRadius": 3,
         }
       }
       testID="surface"
@@ -232,11 +232,11 @@ exports[`renders snackbar with action button 1`] = `
         "opacity": 0,
         "shadowColor": "#000",
         "shadowOffset": {
-          "height": 2,
+          "height": 4,
           "width": 0,
         },
         "shadowOpacity": 0.15,
-        "shadowRadius": 6,
+        "shadowRadius": 8,
         "transform": [
           {
             "scale": 0.9,
@@ -264,7 +264,7 @@ exports[`renders snackbar with action button 1`] = `
             "width": 0,
           },
           "shadowOpacity": 0.3,
-          "shadowRadius": 2,
+          "shadowRadius": 3,
         }
       }
       testID="surface"
@@ -504,11 +504,11 @@ exports[`renders snackbar with content 1`] = `
         "opacity": 0,
         "shadowColor": "#000",
         "shadowOffset": {
-          "height": 2,
+          "height": 4,
           "width": 0,
         },
         "shadowOpacity": 0.15,
-        "shadowRadius": 6,
+        "shadowRadius": 8,
         "transform": [
           {
             "scale": 0.9,
@@ -536,7 +536,7 @@ exports[`renders snackbar with content 1`] = `
             "width": 0,
           },
           "shadowOpacity": 0.3,
-          "shadowRadius": 2,
+          "shadowRadius": 3,
         }
       }
       testID="surface"

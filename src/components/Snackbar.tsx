@@ -164,7 +164,7 @@ const Snackbar = ({
   onDismiss,
   message,
   children,
-  elevation = 2,
+  elevation = 3,
   style,
   wrapperStyle,
   contentStyle,
@@ -195,6 +195,7 @@ const Snackbar = ({
 
   const animateShow = useLatestCallback(() => {
     if (hideTimeout.current) clearTimeout(hideTimeout.current);
+    opacity.stopAnimation();
 
     Animated.timing(opacity, {
       toValue: 1,
@@ -227,10 +228,12 @@ const Snackbar = ({
     if (hideTimeout.current) {
       clearTimeout(hideTimeout.current);
     }
+    opacity.stopAnimation();
 
     Animated.timing(opacity, {
       toValue: 0,
       duration: 100 * scale,
+      easing: Easing.in(Easing.ease),
       useNativeDriver: true,
     }).start(({ finished }) => {
       if (finished) {
