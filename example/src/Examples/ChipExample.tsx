@@ -368,9 +368,8 @@ const ChipExample = () => {
         visible={snackbarProperties.visible}
         onDismiss={() => setSnackbarProperties({ visible: false, text: '' })}
         duration={Snackbar.DURATION_SHORT}
-      >
-        {snackbarProperties.text}
-      </Snackbar>
+        message={snackbarProperties.text}
+      />
     </>
   );
 };

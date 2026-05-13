@@ -217,9 +217,8 @@ const SearchExample = ({ navigation }: Props) => {
         visible={isVisible}
         onDismiss={() => setIsVisible(false)}
         duration={Snackbar.DURATION_SHORT}
-      >
-        Microphone button pressed
-      </Snackbar>
+        message="Microphone button pressed"
+      />
     </>
   );
 };

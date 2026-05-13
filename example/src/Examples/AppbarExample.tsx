@@ -198,9 +198,8 @@ const AppbarExample = ({ navigation }: Props) => {
         visible={showSnackbar}
         onDismiss={() => setShowSnackbar(false)}
         duration={Snackbar.DURATION_SHORT}
-      >
-        Heading pressed
-      </Snackbar>
+        message="Heading pressed"
+      />
     </>
   );
 };

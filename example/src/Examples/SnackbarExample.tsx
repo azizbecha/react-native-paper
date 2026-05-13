@@ -106,9 +106,8 @@ const SnackbarExample = () => {
         }
         duration={Snackbar.DURATION_MEDIUM}
         style={showLongerAction && styles.longerAction}
-      >
-        {showLongerMessage ? LONG_MESSAGE : SHORT_MESSAGE}
-      </Snackbar>
+        message={showLongerMessage ? LONG_MESSAGE : SHORT_MESSAGE}
+      />
     </>
   );
 };
